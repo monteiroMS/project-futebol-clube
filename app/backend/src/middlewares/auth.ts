@@ -7,7 +7,7 @@ const secret = process.env.JWT_SECRET || 'jwt_secret';
 const NOT_FOUND_MESSAGE = 'Token not found';
 const INVALID_TOKEN_MESSAGE = 'Expired or invalid token';
 
-const decodeJwt = (token: string) => {
+export const decodeJwt = (token: string) => {
   const decodedJwt = jwt.verify(token, secret);
   return decodedJwt as iDecodedJWT;
 };
