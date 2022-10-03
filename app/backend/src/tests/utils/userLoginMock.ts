@@ -18,6 +18,14 @@ export const user = {
     email: 'user@xablau.com',
     password: 'senha_invalida',
   },
+  invalidEmail: {
+    email: 'user@xablau.com',
+    password: 'secret_user',
+  },
+  invalidPassword: {
+    email: 'user@user.com',
+    password: 'senha_invalida',
+  },
 };
 
 export const noEmail = {
