@@ -34,8 +34,6 @@ User.init({
     type: STRING,
   },
 }, {
-  // ... Outras configs
-  // underscored: true,
   sequelize: db,
   modelName: 'users',
   timestamps: false,
