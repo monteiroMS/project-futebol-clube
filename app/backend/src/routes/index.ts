@@ -1,7 +1,7 @@
 import login from './login';
-
-export default login;
+import teams from './teams';
 
 export {
   login,
+  teams,
 };
