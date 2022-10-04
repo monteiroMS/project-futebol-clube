@@ -9,4 +9,12 @@ export default class TeamService {
     const teams = await this._model.findAll();
     return teams;
   }
+
+  public async getById(id: number) {
+    const team = await this._model.findByPk(id);
+
+    if (!team) throw new Error('Team not found');
+
+    return team;
+  }
 }
