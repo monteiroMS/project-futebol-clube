@@ -12,7 +12,7 @@ export default class TeamController {
       const teams = await this._service.getAll();
       return res.status(200).json(teams);
     } catch (error) {
-      return errorHandler(error as Error, res);
+      return errorHandler(error as Error, res, 500);
     }
   };
 
@@ -22,7 +22,7 @@ export default class TeamController {
       const team = await this._service.getById(Number(id));
       return res.status(200).json(team);
     } catch (error) {
-      return errorHandler(error as Error, res);
+      return errorHandler(error as Error, res, 404);
     }
   };
 }

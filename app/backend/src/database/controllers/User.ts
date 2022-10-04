@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { UserService } from '../services';
+import errorHandler from '../../errors/StandartTryCatchErrorHandler';
 
 export default class UserController {
   constructor(
@@ -12,10 +13,7 @@ export default class UserController {
       const token = await this._service.login(email, password);
       return res.status(200).json({ token });
     } catch (error) {
-      console.log(error);
-      if (error instanceof Error) {
-        return res.status(401).json({ message: error.message });
-      }
+      return errorHandler(error as Error, res, 401);
     }
   };
 }
