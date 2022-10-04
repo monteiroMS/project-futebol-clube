@@ -25,7 +25,8 @@ class App {
     this.app.use(accessControl);
     this.app
       .use(Router.login)
-      .use(Router.teams);
+      .use(Router.teams)
+      .use(Router.matches);
   }
 
   public start(PORT: string | number):void {
