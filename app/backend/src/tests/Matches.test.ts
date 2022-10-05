@@ -5,7 +5,7 @@ import * as chaiHttp from 'chai-http';
 import { app } from '../app';
 import Match from '../database/models/Match';
 import matchesMock from './utils/matchesMock';
-import iMatch from '../interfaces/iMatch';
+import { iMatch } from '../interfaces';
 
 chai.use(chaiHttp);
 

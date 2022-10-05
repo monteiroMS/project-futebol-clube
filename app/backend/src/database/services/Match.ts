@@ -1,3 +1,4 @@
+import { iCreateMatch } from '../../interfaces';
 import Match from '../models/Match';
 import Team from '../models/Team';
 
@@ -43,5 +44,18 @@ export default class MatchService {
     });
 
     return matches;
+  }
+
+  public async create(match: iCreateMatch) {
+    const newMatch = await this._model.create(match);
+    return newMatch;
+  }
+
+  public async updateProgress(id: number) {
+    const result = await this._model.update(
+      { inProgress: false },
+      { where: { id } },
+    );
+    return result;
   }
 }

@@ -6,7 +6,7 @@ export default interface iMatch extends Model {
   homeTeamGoals: number,
   awayTeam: number,
   awayTeamGoals: number,
-  inProgress: false,
+  inProgress: boolean,
   teamHome: {
     teamName: string
   },
