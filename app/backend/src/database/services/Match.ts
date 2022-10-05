@@ -1,4 +1,4 @@
-import { iCreateMatch } from '../../interfaces';
+import { iCreateMatch, iGoalUpdate } from '../../interfaces';
 import Match from '../models/Match';
 import Team from '../models/Team';
 
@@ -54,6 +54,19 @@ export default class MatchService {
   public async updateProgress(id: number) {
     const result = await this._model.update(
       { inProgress: false },
+      { where: { id } },
+    );
+    return result;
+  }
+
+  public async getById(id: number) {
+    const match = await this._model.findOne({ where: { id } });
+    return match;
+  }
+
+  public async updateGoals(goalsUpdate: iGoalUpdate, id: number) {
+    const result = await this._model.update(
+      goalsUpdate,
       { where: { id } },
     );
     return result;

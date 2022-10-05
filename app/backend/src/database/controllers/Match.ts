@@ -39,4 +39,14 @@ export default class MatchController {
       return errorHandler(error as Error, res, 500);
     }
   };
+
+  public updateGoals = async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+      await this._service.updateGoals(req.body, Number(id));
+      return res.status(200).json({ message: 'Score updated!' });
+    } catch (error) {
+      return errorHandler(error as Error, res, 500);
+    }
+  };
 }
