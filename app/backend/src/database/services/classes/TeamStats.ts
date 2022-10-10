@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/no-cycle
 import { MatchService } from '..';
+import { HomeAwayOrBoth } from '../../../types';
 
 export default class TeamStats {
   private _totalPoints = 0;
@@ -13,7 +14,7 @@ export default class TeamStats {
 
   constructor(
     private _teamId: number,
-    private _homeOrAway: 'homeTeam' | 'awayTeam',
+    private _homeOrAway: HomeAwayOrBoth,
     private _matchService = new MatchService(),
   ) {}
 
@@ -42,7 +43,7 @@ export default class TeamStats {
     await this.updatePoints();
   };
 
-  private updateGoals = async () => {
+  private setHomeGoals = async () => {
     const matches = await this.getMatches();
     matches.forEach((match) => {
       this._goalsFavor += this._homeOrAway === 'homeTeam'
@@ -53,6 +54,23 @@ export default class TeamStats {
         : match.homeTeamGoals;
       this._goalsBalance = this._goalsFavor - this._goalsOwn;
     });
+  };
+
+  private updateGoals = async () => {
+    const matches = await this.getMatches();
+    if (this._homeOrAway === 'bothTeams') {
+      matches.forEach((match) => {
+        this._goalsFavor += this._teamId === match.homeTeam
+          ? match.homeTeamGoals
+          : match.awayTeamGoals;
+        this._goalsOwn += this._teamId === match.homeTeam
+          ? match.awayTeamGoals
+          : match.homeTeamGoals;
+        this._goalsBalance = this._goalsFavor - this._goalsOwn;
+      });
+    } else {
+      this.setHomeGoals();
+    }
   };
 
   private updatePoints = async () => {

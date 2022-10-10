@@ -6,6 +6,7 @@ const router = express.Router();
 const controller = new LeaderboardController();
 
 router
+  .get('/leaderboard', controller.getBothLeaderboard)
   .get('/leaderboard/home', controller.getHomeLeaderboard)
   .get('/leaderboard/away', controller.getAwayLeaderboard);
 

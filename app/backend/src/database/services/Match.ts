@@ -1,4 +1,6 @@
-import { BooleanString, iCreateMatch, iGoalUpdate, iMatch } from '../../interfaces';
+import { Op } from 'sequelize';
+import { iCreateMatch, iGoalUpdate, iMatch } from '../../interfaces';
+import { BooleanString, HomeAwayOrBoth } from '../../types';
 import Match from '../models/Match';
 import Team from '../models/Team';
 
@@ -72,22 +74,18 @@ export default class MatchService {
     return result;
   }
 
-  public async getAllByTeamId(homeOrAway: 'homeTeam' | 'awayTeam', teamId: number) {
+  public async getAllByTeamId(homeOrAway: HomeAwayOrBoth, teamId: number) {
+    if (homeOrAway === 'bothTeams') {
+      const matches = await this._model.findAll({
+        where: {
+          [Op.or]: [{ homeTeam: teamId }, { awayTeam: teamId }],
+          [Op.and]: { inProgress: false },
+        },
+      });
+      return matches as iMatch[];
+    }
     const matches = await this._model.findAll({
-      where: {
-        [homeOrAway]: teamId,
-        inProgress: false,
-      },
-      include: [{
-        model: Team,
-        as: 'teamHome',
-        attributes: { exclude: ['id'] },
-      },
-      {
-        model: Team,
-        as: 'teamAway',
-        attributes: { exclude: ['id'] },
-      }],
+      where: { [homeOrAway]: teamId, inProgress: false },
     });
     return matches as iMatch[];
   }

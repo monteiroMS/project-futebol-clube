@@ -2,6 +2,7 @@
 import TeamStats from './classes/TeamStats';
 import { iTeamStats } from '../../interfaces';
 import TeamService from './Team';
+import { HomeAwayOrBoth } from '../../types';
 
 export default class LeaderboardService {
   private _leaderboard: iTeamStats[] = [];
@@ -10,7 +11,7 @@ export default class LeaderboardService {
     private _teamService = new TeamService(),
   ) {}
 
-  public getLeaderboard = async (homeOrAway: 'homeTeam' | 'awayTeam') => {
+  public getLeaderboard = async (homeOrAway: HomeAwayOrBoth) => {
     await this.getAllTeamsStats(homeOrAway);
     this.sortByGoalsOwn();
     this.sortByGoalsFavor();
@@ -21,7 +22,7 @@ export default class LeaderboardService {
     return this._leaderboard;
   };
 
-  private getAllTeamsStats = async (homeOrAway: 'homeTeam' | 'awayTeam'): Promise<iTeamStats[]> => {
+  private getAllTeamsStats = async (homeOrAway: HomeAwayOrBoth): Promise<iTeamStats[]> => {
     const allTeams = await this._teamService.getAll();
     this._leaderboard = await Promise.all(allTeams.map(async (team) => {
       const teamLeaderboard = new TeamStats(team.id, homeOrAway);

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { BooleanString } from '../../interfaces';
+import { BooleanString } from '../../types';
 import errorHandler from '../../errors/StandartTryCatchErrorHandler';
 import { MatchService } from '../services';
 
