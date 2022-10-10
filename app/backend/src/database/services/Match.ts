@@ -1,4 +1,4 @@
-import { iCreateMatch, iGoalUpdate } from '../../interfaces';
+import { BooleanString, iCreateMatch, iGoalUpdate, iMatch } from '../../interfaces';
 import Match from '../models/Match';
 import Team from '../models/Team';
 
@@ -23,10 +23,10 @@ export default class MatchService {
       ],
     });
 
-    return matches;
+    return matches as iMatch[];
   }
 
-  public async filterByProgress(inProgress: string) {
+  public async filterByProgress(inProgress: BooleanString) {
     const matches = await this._model.findAll({
       where: { inProgress: inProgress === 'true' },
       include: [
@@ -70,5 +70,25 @@ export default class MatchService {
       { where: { id } },
     );
     return result;
+  }
+
+  public async getAllByTeamId(homeOrAway: 'homeTeam' | 'awayTeam', teamId: number) {
+    const matches = await this._model.findAll({
+      where: {
+        [homeOrAway]: teamId,
+        inProgress: false,
+      },
+      include: [{
+        model: Team,
+        as: 'teamHome',
+        attributes: { exclude: ['id'] },
+      },
+      {
+        model: Team,
+        as: 'teamAway',
+        attributes: { exclude: ['id'] },
+      }],
+    });
+    return matches as iMatch[];
   }
 }

@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { BooleanString } from '../../interfaces';
 import errorHandler from '../../errors/StandartTryCatchErrorHandler';
 import { MatchService } from '../services';
 
@@ -14,7 +15,7 @@ export default class MatchController {
         const matches = await this._service.getAll();
         return res.status(200).json(matches);
       }
-      const matches = await this._service.filterByProgress(inProgress as string);
+      const matches = await this._service.filterByProgress(inProgress as BooleanString);
       return res.status(200).json(matches);
     } catch (error) {
       return errorHandler(error as Error, res, 500);

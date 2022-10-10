@@ -17,4 +17,14 @@ export default class TeamService {
 
     return team;
   }
+
+  public async getByName(teamName: string) {
+    const team = await this._model.findOne({
+      where: { teamName },
+    });
+
+    if (!team) throw new Error('Team not found');
+
+    return team.id;
+  }
 }

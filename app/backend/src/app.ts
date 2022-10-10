@@ -26,7 +26,8 @@ class App {
     this.app
       .use(Router.login)
       .use(Router.teams)
-      .use(Router.matches);
+      .use(Router.matches)
+      .use(Router.leaderboard);
   }
 
   public start(PORT: string | number):void {
