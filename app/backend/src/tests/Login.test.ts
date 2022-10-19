@@ -187,13 +187,13 @@ describe('Testa o endpoint GET /login/validate -> usuário padrão', () => {
     expect(status).to.be.equal(401);
   });
 
-  it('Retorna mensagem "Expired or invalid token", com status 401 caso o token no header da requisição seja inválido', async () => {
+  it('Retorna mensagem "Token must be a valid token", com status 401 caso o token no header da requisição seja inválido', async () => {
     const { body } = await chai
       .request(app)
       .get('/login/validate')
       .set('authorization', 'invalid_token_mock');
 
-    expect(body).to.have.property('message').to.be.equal('Expired or invalid token');
+    expect(body).to.have.property('message').to.be.equal('Token must be a valid token');
   });
 });
 
@@ -245,12 +245,12 @@ describe('Testa o endpoint GET /login/validate -> usuário admin', () => {
     expect(status).to.be.equal(401);
   });
 
-  it('Retorna mensagem "Expired or invalid token", com status 401 caso o token no header da requisição seja inválido', async () => {
+  it('Retorna mensagem "Token must be a valid token", com status 401 caso o token no header da requisição seja inválido', async () => {
     const { body } = await chai
       .request(app)
       .get('/login/validate')
       .set('authorization', 'invalid_token_mock');
 
-    expect(body).to.have.property('message').to.be.equal('Expired or invalid token');
+    expect(body).to.have.property('message').to.be.equal('Token must be a valid token');
   });
 });
